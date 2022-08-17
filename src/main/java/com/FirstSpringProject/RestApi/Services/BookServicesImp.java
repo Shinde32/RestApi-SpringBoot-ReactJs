@@ -1,37 +1,42 @@
 package com.FirstSpringProject.RestApi.Services;
-import java.util.ArrayList;
-
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.FirstSpringProject.RestApi.BookData.Book;
+import com.FirstSpringProject.RestApi.Dao.BookDao;
 
 //Request handling at Service Layer
 
 @Service
 public class BookServicesImp implements BookServices {
 
-	List<Book> list;
+	@Autowired
+	private BookDao bookDao;
+	
+	//List<Book> list;
 	
 	public BookServicesImp()
 	{
+		/*
 		list = new ArrayList<>();
 		list.add(new Book(1,"Indian Polity and Constitution","M.Laxmikant","Indian Polity"));
 		list.add(new Book(2,"Modern Indian History","Rajiv Ahir","History"));
 		list.add(new Book(3,"ShankarIas","ShankarIas Institute","Environment"));
 		list.add(new Book(4,"Indian Economy","Sanjiv Varma","Economy"));
+		*/
 	}
 	
 	@Override
 	public List<Book> getBooks() {
 		
-		return list;
+		return bookDao.findAll();
 	}
 
 	@Override
 	public Book getBook(long bId) {
-		
+		/*
 		Book b = null;
 		for(Book bt:list)
 		{
@@ -41,21 +46,22 @@ public class BookServicesImp implements BookServices {
 				break;
 			}
 		}
-		
-		return b;
+		*/
+		return bookDao.getReferenceById(bId);
 	}
 
 	@Override
 	public Book addBook(Book book) {
 		
-		list.add(book);
-		
+	//	list.add(book);
+		bookDao.save(book);
 		return book;
 	}
 
 	@Override
 	public Book updateBook(Book ubook) {
-		
+	
+		/*
 		list.forEach(b -> {
 			if(b.getB_Id() == ubook.getB_Id())
 			{
@@ -64,13 +70,15 @@ public class BookServicesImp implements BookServices {
 				b.setB_Subject(ubook.getB_Subject());
 			}
 		});
-		
+		*/
+		bookDao.save(ubook);
 		return ubook;
 	}
 
 	@Override
 	public Book deleteBook(long dId) {
 
+		/*
 		Book b = null;
 		for(Book bt:list)
 		{
@@ -81,6 +89,10 @@ public class BookServicesImp implements BookServices {
 			}
 		}
 		list.remove(b);
-		return b;
+		*/
+		Book entity = bookDao.getReferenceById(dId);
+		bookDao.delete(entity);
+		return entity;
 	}
+	
 }

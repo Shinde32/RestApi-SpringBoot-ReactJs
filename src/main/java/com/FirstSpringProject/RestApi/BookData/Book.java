@@ -1,7 +1,18 @@
 package com.FirstSpringProject.RestApi.BookData;
 
-public class Book {
+import java.io.Serializable;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+
+@JsonIgnoreProperties({"hibernateLazyInitializer"})
+@Entity
+public class Book implements Serializable{
+
+		@Id
 		private long b_Id;
 		private String b_Name;
 		private String b_Author;
